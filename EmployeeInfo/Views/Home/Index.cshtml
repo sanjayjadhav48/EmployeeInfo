@@ -1,0 +1,33 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model  IPagedList<EmployeeInfo.Models.Employee>
+@{
+    ViewBag.Title = "Home Page";
+} 
+
+<h2>Employee Details </h2>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.ActionLink("Id", "Index", new { sortOrder = "Id" })</th>
+                <th>@Html.ActionLink("Name", "Index", new { sortOrder = "Name" })</th>
+                <th>@Html.ActionLink("Department", "Index", new { sortOrder = "Dept" })</th>
+                <th>@Html.ActionLink("Branch", "Index", new { sortOrder = "Branch" })</th>
+            </tr>
+        </thead>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.Name</td>
+                <td>@employee.Department</td>
+                <td>@employee.Branch</td>
+            </tr>
+        }
+    </table>
+</div>
+
+@Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, sortOrder = Request.QueryString["sortOrder"], search = Request.QueryString["search"] }))
